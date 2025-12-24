@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Santapris Academy - Excellence in Education</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .admin-btn {
+            background: #ff6b6b;
+            padding: 0.6rem 1.2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .admin-btn:hover {
+            background: #ff5252;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .dashboard {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            display: none;
+        }
+
+        .dashboard.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #1e3c72;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: #ff6b6b;
+        }
+
+        .btn-danger:hover {
+            background: #ff5252;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            margin: 0.3rem;
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .admin-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 1rem;
+        }
+
+        .admin-tab {
+            padding: 0.8rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #666;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -1rem;
+        }
+
+        .admin-tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .admin-content {
+            display: none;
+        }
+
+        .admin-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #1e3c72;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .search-box input {
+            flex: 1;
+        }
+
+        /* Data Display */
+        .data-item {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .data-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .data-item-title {
+            font-weight: bold;
+            color: #1e3c72;
+            font-size: 1.1rem;
+        }
+
+        .data-item-date {
+            color: #999;
+            font-size: 0.85rem;
+        }
+
+        .data-item-content {
+            color: #555;
+            margin-top: 0.5rem;
+        }
+
+        .history-badge {
+            display: inline-block;
+            background: #ffd700;
+            color: #333;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+        }
+
+        /* Table */
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th {
+            background: #1e3c72;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 5px;
+            color: white;
+            z-index: 2000;
+            animation: slideIn 0.3s ease;
+        }
+
+        .notification-success {
+            background: #4caf50;
+        }
+
+        .notification-warning {
+            background: #ff9800;
+        }
+
+        .notification-error {
+            background: #f44336;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-close {
+            float: right;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        /* Dark Mode */
+        body.dark-mode {
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode header {
+            background: linear-gradient(135deg, #0d1b2a 0%, #1a2951 100%);
+        }
+
+        body.dark-mode .admin-panel,
+        body.dark-mode table,
+        body.dark-mode .modal-content {
+            background: #2d2d2d;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .data-item {
+            background: #333;
+        }
+
+        body.dark-mode input,
+        body.dark-mode textarea,
+        body.dark-mode select {
+            background: #1a1a1a;
+            color: #e0e0e0;
+            border-color: #444;
+        }
+
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 999;
+            transition: all 0.3s;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        footer {
+            background: #1e3c72;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .admin-tabs {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo" onclick="showHome()">
+                <span>🎓 SANTAPRIS ACADEMY</span>
+            </div>
+            <ul class="nav-links">
+                <li><a onclick="showSection('home')">Home</a></li>
+                <li><a onclick="showSection('updates')">Updates</a></li>
+                <li><a onclick="showSection('academics')">Academics</a></li>
+                <li><a onclick="showSection('fees')">Fees</a></li>
+                <li><a onclick="showSection('staff')">Staff</a></li>
+                <li><a onclick="showSection('search')">Search History</a></li>
+                <li><button class="admin-btn" onclick="toggleAdminPanel()">📊 Admin</button></li>
+            </ul>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        </nav>
+    </header>
+
+    <!-- HOME SECTION -->
+    <section class="dashboard active" id="homeSection">
+        <h2 class="section-title">Welcome to Santapris Academy</h2>
+        <div style="background: white; padding: 2rem; border-radius: 8px; margin-bottom: 2rem;">
+            <h3 style="color: #1e3c72; margin-bottom: 1rem;">📢 Latest Updates</h3>
+            <div id="latestUpdates"></div>
+        </div>
+        <div style="background: white; padding: 2rem; border-radius: 8px;">
+            <h3 style="color: #1e3c72; margin-bottom: 1rem;">🎓 Quick Stats</h3>
+            <p><strong>Total Students:</strong> <span id="totalStudents">0</span></p>
+            <p><strong>Teaching Staff:</strong> <span id="totalStaff">0</span></p>
+            <p><strong>Total Updates:</strong> <span id="totalUpdates">0</span></p>
+        </div>
+    </section>
+
+    <!-- UPDATES SECTION -->
+    <section class="dashboard" id="updatesSection">
+        <h2 class="section-title">📢 Daily School Updates</h2>
+        <div class="search-box">
+            <input type="text" id="updateSearch" placeholder="Search updates by title or content...">
+            <button class="btn" onclick="searchUpdates()">Search</button>
+            <button class="btn btn-danger" onclick="clearSearch()">Clear</button>
+        </div>
+        <div id="updatesList"></div>
+    </section>
+
+    <!-- ACADEMICS SECTION -->
+    <section class="dashboard" id="academicsSection">
+        <h2 class="section-title">📊 Exam Results</h2>
+        <div class="search-box">
+            <input type="text" id="academicSearch" placeholder="Search by grade or subject...">
+            <button class="btn" onclick="searchAcademics()">Search</button>
+        </div>
+        <div id="academicsList"></div>
+    </section>
+
+    <!-- FEES SECTION -->
+    <section class="dashboard" id="feesSection">
+        <h2 class="section-title">💰 Fee Structure</h2>
+        <div id="feesList"></div>
+    </section>
+
+    <!-- STAFF SECTION -->
+    <section class="dashboard" id="staffSection">
+        <h2 class="section-title">👥 Teaching Staff</h2>
+        <div class="search-box">
+            <input type="text" id="staffSearch" placeholder="Search by name or subject...">
+            <button class="btn" onclick="searchStaff()">Search</button>
+        </div>
+        <div id="staffList"></div>
+    </section>
+
+    <!-- SEARCH HISTORY SECTION -->
+    <section class="dashboard" id="searchSection">
+        <h2 class="section-title">🔍 Search & View History</h2>
+        <div class="search-box">
+            <input type="text" id="globalSearch" placeholder="Search all records...">
+            <button class="btn" onclick="globalSearch()">Search</button>
+        </div>
+        <div id="searchResults"></div>
+    </section>
+
+    <!-- ADMIN PANEL -->
+    <div class="modal" id="adminModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="toggleAdminPanel()">&times;</span>
+            <h2 style="color: #1e3c72; margin-bottom: 1.5rem;">📊 Admin Control Panel</h2>
+            
+            <div class="admin-tabs">
+                <button class="admin-tab active" onclick="switchAdminTab('updates')">Updates</button>
+                <button class="admin-tab" onclick="switchAdminTab('academics')">Academics</button>
+                <button class="admin-tab" onclick="switchAdminTab('fees')">Fees</button>
+                <button class="admin-tab" onclick="switchAdminTab('staff')">Staff</button>
+                <button class="admin-tab" onclick="switchAdminTab('export')">Export/Import</button>
+            </div>
+
+            <!-- Updates Tab -->
+            <div class="admin-content active" id="updatesAdmin">
+                <h3 style="color: #1e3c72; margin-bottom: 1rem;">Add/Edit Updates</h3>
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" id="updateTitle" placeholder="Update title">
+                </div>
+                <div class="form-group">
+                    <label>Content</label>
+                    <textarea id="updateContent" placeholder="Update content"></textarea>
+                </div>
+                <button class="btn" onclick="addUpdate()">Add Update</button>
+                <hr style="margin: 2rem 0;">
+                <div id="updatesList2"></div>
+            </div>
+
+            <!-- Academics Tab -->
+            <div class="admin-content" id="academicsAdmin">
+                <h3 style="color: #1e3c72; margin-bottom: 1rem;">Add/Edit Academic Results</h3>
+                <div class="form-group">
+                    <label>Grade</label>
+                    <input type="text" id="gradeName" placeholder="e.g., Grade 6">
+                </div>
+                <div class="form-group">
+                    <label>Subject</label>
+                    <input type="text" id="subjectName" placeholder="e.g., Mathematics">
+                </div>
+                <div class="form-group">
+                    <label>Average Score (%)</label>
+                    <input type="number" id="avgScore" placeholder="80" min="0" max="100">
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="academicStatus">
+                        <option value="Good">Good</option>
+                        <option value="Excellent">Excellent</option>
+                        <option value="Needs Improvement">Needs Improvement</option>
+                    </select>
+                </div>
+                <button class="btn" onclick="addAcademic()">Add Result</button>
+                <hr style="margin: 2rem 0;">
+                <div id="academicsList2"></div>
+            </div>
+
+            <!-- Fees Tab -->
+            <div class="admin-content" id="feesAdmin">
+                <h3 style="color: #1e3c72; margin-bottom: 1rem;">Add/Edit Fee Structure</h3>
+                <div class="form-group">
+                    <label>Grade/Class</label>
+                    <input type="text" id="feeGrade" placeholder="e.g., Grade 1-3">
+                </div>
+                <div class="form-group">
+                    <label>Tuition Fee (KES)</label>
+                    <input type="number" id="tuitionFee" placeholder="45000">
+                </div>
+                <div class="form-group">
+                    <label>Total Per Term (KES)</label>
+                    <input type="number" id="totalFee" placeholder="64000">
+                </div>
+                <button class="btn" onclick="addFee()">Add Fee Structure</button>
+                <hr style="margin: 2rem 0;">
+                <div id="feesList2"></div>
+            </div>
+
+            <!-- Staff Tab -->
+            <div class="admin-content" id="staffAdmin">
+                <h3 style="color: #1e3c72; margin-bottom: 1rem;">Add/Edit Staff</h3>
+                <div class="form-group">
+                    <label>Staff Name</label>
+                    <input type="text" id="staffName" placeholder="Full name">
+                </div>
+                <div class="form-group">
+                    <label>Position</label>
+                    <input type="text" id="staffPosition" placeholder="e.g., Mathematics Teacher">
+                </div>
+                <div class="form-group">
+                    <label>Subjects/Classes</label>
+                    <input type="text" id="staffSubjects" placeholder="e.g., Math, Science">
+                </div>
+                <button class="btn" onclick="addStaff()">Add Staff</button>
+                <hr style="margin: 2rem 0;">
+                <div id="staffList2"></div>
+            </div>
+
+            <!-- Export/Import Tab -->
+            <div class="admin-content" id="exportAdmin">
+                <h3 style="color: #1e3c72; margin-bottom: 1rem;">Data Management</h3>
+                <h4>Export Data</h4>
+                <p>Download all your data as a JSON file for backup:</p>
+                <button class="btn" onclick="exportData()">📥 Export All Data</button>
+                
+                <hr style="margin: 2rem 0;">
+                
+                <h4>Import Data</h4>
+                <p>Upload a previously exported JSON file:</p>
+                <input type="file" id="importFile" accept=".json">
+                <button class="btn" onclick="importData()">📤 Import Data</button>
+
+                <hr style="margin: 2rem 0;">
+                
+                <h4>Clear All Data</h4>
+                <p style="color: #ff6b6b;"><strong>⚠️ Warning:</strong> This will delete all records!</p>
+                <button class="btn btn-danger" onclick="clearAllData()">🗑️ Clear Everything</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Santapris Academy. All rights reserved.</p>
+        <p>Email: info@santaprisacademy.edu | Phone: +254 123 456 789</p>
+    </footer>
+
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙</button>
+
+    <script>
+        // Data Storage System
+        class DataManager {
+            constructor() {
+                this.loadData();
+            }
+
+            loadData() {
+                const saved = localStorage.getItem('santaprisData');
+                if (saved) {
+                    this.data = JSON.parse(saved);
+                } else {
+                    this.data = {
+                        updates: [],
+                        academics: [],
+                        fees: [],
+                        staff: [],
+                        searchHistory: []
+                    };
+                    this.initializeDefaultData();
+                }
+            }
+
+            initializeDefaultData() {
+                this.data.updates = [
+                    { id: 1, title: '🎄 Holiday Break', content: 'School closes for festive season. Classes resume Jan 13.', date: new Date().toISOString(), edited: 0 },
+                    { id: 2, title: '🏆 Term 3 Results', content: 'Exam results now available in academics section.', date: new Date().toISOString(), edited: 0 }
+                ];
+                this.data.staff = [
+                    { id: 1, name: 'Jane Kipchoge', position: 'Head Teacher', subjects: 'Mathematics, Science', date: new Date().toISOString() },
+                    { id: 2, name: 'Susan Mwangi', position: 'Grade 1-2 Teacher', subjects: 'English, Mathematics', date: new Date().toISOString() }
+                ];
+                this.data.academics = [
+                    { id: 1, grade: 'Grade 6', subject: 'Mathematics', score: 85, status: 'Excellent', date: new Date().toISOString() },
+                    { id: 2, grade: 'Grade 6', subject: 'English', score: 82, status: 'Excellent', date: new Date().toISOString() }
+                ];
+                this.data.fees = [
+                    { id: 1, grade: 'Grade 1-3', tuition: 45000, total: 64000, date: new Date().toISOString() },
+                    { id: 2, grade: 'Grade 4-6', tuition: 55000, total: 77000, date: new Date().toISOString() }
+                ];
+                this.saveData();
+            }
+
+            saveData() {
+                localStorage.setItem('santaprisData', JSON.stringify(this.data));
+            }
+
+            addRecord(category, record) {
+                record.id = Date.now();
+                record.date = new Date().toISOString();
+                record.edited = 0;
+                this.data[category].push(record);
+                this.saveData();
+                return record;
+            }
+
+            updateRecord(category, id, updates) {
+                const index = this.data[category].findIndex(r => r.id === id);
+                if (index !== -1) {
+                    this.data[category][index] = { ...this.data[category][index], ...updates, edited: (this.data[category][index].edited || 0) + 1 };
+                    this.saveData();
+                    return this.data[category][index];
+                }
+            }
+
+            deleteRecord(category, id) {
+                this.data[category] = this.data[category].filter(r => r.id !== id);
+                this.saveData();
+            }
+
+            getRecords(category) {
+                return this.data[category] || [];
+            }
+
+            search(query) {
+                query = query.toLowerCase();
+                const results = {
+                    updates: this.data.updates.filter(r => r.title.toLowerCase().includes(query) || r.content.toLowerCase().includes(query)),
+                    academics: this.data.academics.filter(r => r.grade.toLowerCase().includes(query) || r.subject.toLowerCase().includes(query)),
+                    fees: this.data.fees.filter(r => r.grade.toLowerCase().includes(query)),
+                    staff: this.data.staff.filter(r => r.name.toLowerCase().includes(query) || r.subjects.toLowerCase().includes(query))
+                };
+                return results;
+            }
+
+            exportData() {
+                return JSON.stringify(this.data, null, 2);
+            }
+
+            importData(jsonData) {
+                try {
+                    this.data = JSON.parse(jsonData);
+                    this.saveData();
+                    return true;
+                } catch (e) {
+                    return false;
+                }
+            }
+
+            clearAll() {
+                this.data = { updates: [], academics: [], fees: [], staff: [], searchHistory: [] };
+                this.saveData();
+            }
+        }
+
+        const db = new DataManager();
+
+        // UI Functions
+        function showSection(section) {
+            document.querySelectorAll('.dashboard').forEach(el => el.classList.remove('active'));
+            document.getElementById(section === 'home' ? 'homeSection' : section + 'Section').classList.add('active');
+            
+            if (section === 'home') loadHome();
+            else if (section === 'updates') loadUpdates();
+            else if (section === 'academics') loadAcademics();
+            else if (section === 'fees') loadFees();
+            else if (section === 'staff') loadStaff();
+            else if (section === 'search') loadSearch();
+        }
+
+        function showHome() {
+            showSection('home');
+            window.scrollTo(0, 0);
+        }
+
+        function loadHome() {
+            const updates = db.getRecords('updates');
+            document.getElementById('latestUpdates').innerHTML = updates.slice(-3).reverse().map(u => `
+                <div class="data-item">
+                    <div class="data-item-header">
+                        <span class="data-item-title">${u.title}</span>
+                        <span class="data-item-date">${new Date(u.date).toLocaleDateString()}</span>
+                    </div>
+                    <div class="data-item-content">${u.content}</div>
+                </div>
+            `).join('');
+
+            document.getElementById('totalStudents').textContent = '850+';
+            document.getElementById('totalStaff').textContent = db.getRecords('staff').length;
+            document.getElementById('totalUpdates').textContent = db.getRecords('updates').length;
+        }
+
+        function loadUpdates() {
+            const updates = db.getRecords('updates');
+            document.getElementById('updatesList').innerHTML = updates.reverse().map(u => `
+                <div class="data-item">
+                    <div class="data-item-header">
+                        <span class="data-item-title">${u.title}${u.edited > 0 ? '<span class="history-badge">Edited ' + u.edited + 'x</span>' : ''}</span>
+                        <span class="data-item-date">${new Date(u.date).toLocaleDateString()} ${new Date(u.date).toLocaleTimeString()}</span>
+                    </div>
+                    <div class="data-item-content">${u.content}</div>
+                </div>
+            `).join('');
+        }
+
+        function loadAcademics() {
+            const academics = db.getRecords('academics');
+            document.getElementById('academicsList').innerHTML = academics.length === 0 ? '<p>No records found</p>' : academics.map(a => `
+                <div class="data-item">
+                    <div class="data-item-header">
+                        <span class="data-item-title">${a.grade} - ${a.subject}: ${a.score}% (${a.status})</span>
+                        <span class="data-item-date">${new Date(a.date).toLocaleDateString()}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadFees() {
+            const fees = db.getRecords('fees');
+            document.getElementById('feesList').innerHTML = fees.length === 0 ? '<p>No records found</p>' : fees.map(f => `
+                <div class="data-item">
+                    <div class="data-item-header">
+                        <span class="data-item-title">${f.grade} - KES ${f.total.toLocaleString()} per term</span>
+                        <span class="data-item-date">${new Date(f.date).toLocaleDateString()}</span>
+                    </div>
+                    <div class="data-item-content">Tuition: KES ${f.tuition.toLocaleString()}</div>
+                </div>
+            `).join('');
+        }
+
+        function loadStaff() {
+            const staff = db.getRecords('staff');
+            document.getElementById('staffList').innerHTML = staff.length === 0 ? '<p>No records found</p>' : staff.map(s => `
+                <div class="data-item">
+                    <div class="data-item-header">
+                        <span class="data-item-title">${s.name} - ${s.position}</span>
+                        <span class="data-item-date">${new Date(s.date).toLocaleDateString()}</span>
+                    </div>
+                    <div class="data-item-content">Subjects: ${s.subjects}</div>
+                </div>
+            `).join('');
+        }
+
+        function loadSearch() {
+            document.getElementById('searchResults').innerHTML = '<p>Enter a search term above to find records.</p>';
+        }
+
+        // Search Functions
+        function searchUpdates() {
+            const query = document.getElementById('updateSearch').value;
+            const results = db.getRecords('updates').filter(u => 
+                u.title.toLowerCase().includes(query) || u.content.toLowerCase().includes(query)
+            );
+            document.getElementById('updatesList').innerHTML = results.map(u => `
+                <div class="data-item" style="border-left-color: #ff6b6b;">
+                    <div class="data-item-header">
+                        <span class="data-item-title">${u.title}</span>
+                        <span class="data-item-date">${new Date(u.date).toLocaleDateString()}</span>
+                    </div>
+                    <div class="data-item-content">${u.content}</div>
+                </div>
+            `).join('') || '<p>No results found</p>';
+        }
+
+        function searchAcademics() {
+            const query = document.getElementById('academicSearch').value;
+            const results = db.getRecords('academics').filter(a => 
+                a.grade.toLowerCase().includes(query) || a.subject.toLowerCase().includes(query)
+            );
+            document.getElementById('academicsList').innerHTML = results.map(a => `
+                <div class="data-item" style="border-left-color: #ff6b6b;">
+                    <div class="data-item-header">
+                        <span class="data-item-title">${a.grade} - ${a.subject}: ${a.score}%</span>
+                        <span class="data-item-date">${new Date(a.date).toLocaleDateString()}</span>
+                    </div>
+                </div>
+            `).join('') || '<p>No results found</p>';
+        }
+
+        function searchStaff() {
+            const query = document.getElementById('staffSearch').value;
+            const results = db.getRecords('staff').filter(s => 
+                s.name.toLowerCase().includes(query) || s.subjects.toLowerCase().includes(query)
+            );
+            document.getElementById('staffList').innerHTML = results.map(s => `
+                <div class="data-item" style="border-left-color: #ff6b6b;">
+                    <div class="data-item-header">
+                        <span class="data-item-title">${s.name}</span>
+                        <span class="data-item-date">${new Date(s.date).toLocaleDateString()}</span>
+                    </div>
+                    <div class="data-item-content">${s.position} | ${s.subjects}</div>
+                </div>
+            `).join('') || '<p>No results found</p>';
+        }
+
+        function globalSearch() {
+            const query = document.getElementById('globalSearch').value;
+            const results = db.search(query);
+            let html = '';
+
+            if (results.updates.length > 0) {
+                html += '<h3 style="color: #1e3c72; margin: 1rem 0;">📢 Updates</h3>';
+                html += results.updates.map(u => `
+                    <div class="data-item">
+                        <div class="data-item-title">${u.title}</div>
+                        <div class="data-item-content">${u.content.substring(0, 100)}...</div>
+                        <span class="data-item-date">${new Date(u.date).toLocaleDateString()}</span>
+                    </div>
+                `).join('');
+            }
+
+            if (results.academics.length > 0) {
+                html += '<h3 style="color: #1e3c72; margin: 1rem 0;">📊 Academics</h3>';
+                html += results.academics.map(a => `
+                    <div class="data-item">
+                        <div class="data-item-title">${a.grade} - ${a.subject}: ${a.score}%</div>
+                        <span class="data-item-date">${new Date(a.date).toLocaleDateString()}</span>
+                    </div>
+                `).join('');
+            }
+
+            if (results.staff.length > 0) {
+                html += '<h3 style="color: #1e3c72; margin: 1rem 0;">👥 Staff</h3>';
+                html += results.staff.map(s => `
+                    <div class="data-item">
+                        <div class="data-item-title">${s.name} - ${s.position}</div>
+                        <div class="data-item-content">${s.subjects}</div>
+                        <span class="data-item-date">${new Date(s.date).toLocaleDateString()}</span>
+                    </div>
+                `).join('');
+            }
+
+            if (results.fees.length > 0) {
+                html += '<h3 style="color: #1e3c72; margin: 1rem 0;">💰 Fees</h3>';
+                html += results.fees.map(f => `
+                    <div class="data-item">
+                        <div class="data-item-title">${f.grade} - KES ${f.total.toLocaleString()}</div>
+                        <span class="data-item-date">${new Date(f.date).toLocaleDateString()}</span>
+                    </div>
+                `).join('');
+            }
+
+            document.getElementById('searchResults').innerHTML = html || '<p>No results found for "' + query + '"</p>';
+        }
+
+        function clearSearch() {
+            document.getElementById('updateSearch').value = '';
+            loadUpdates();
+        }
+
+        // Admin Functions
+        function toggleAdminPanel() {
+            document.getElementById('adminModal').classList.toggle('active');
+        }
+
+        function switchAdminTab(tab) {
+            document.querySelectorAll('.admin-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.admin-tab').forEach(el => el.classList.remove('active'));
+            document.getElementById(tab + 'Admin').classList.add('active');
+            event.target.classList.add('active');
+            
+            if (tab === 'updates') loadAdminUpdates();
+            else if (tab === 'academics') loadAdminAcademics();
+            else if (tab === 'fees') loadAdminFees();
+            else if (tab === 'staff') loadAdminStaff();
+        }
+
+        function addUpdate() {
+            const title = document.getElementById('updateTitle').value;
+            const content = document.getElementById('updateContent').value;
+            if (!title || !content) {
+                showNotification('Please fill all fields', 'warning');
+                return;
+            }
+            db.addRecord('updates', { title, content });
+            document.getElementById('updateTitle').value = '';
+            document.getElementById('updateContent').value = '';
+            showNotification('Update added successfully!', 'success');
+            loadAdminUpdates();
+        }
+
+        function deleteUpdate(id) {
+            if (confirm('Delete this update?')) {
+                db.deleteRecord('updates', id);
+                showNotification('Update deleted', 'success');
+                loadAdminUpdates();
+            }
+        }
+
+        function loadAdminUpdates() {
+            const updates = db.getRecords('updates');
+            document.getElementById('updatesList2').innerHTML = updates.map(u => `
+                <div class="data-item">
+                    <div class="data-item-header">
+                        <span>${u.title}</span>
+                        <button class="btn btn-danger btn-small" onclick="deleteUpdate(${u.id})">Delete</button>
+                    </div>
+                    <div class="data-item-content">${u.content}</div>
+                    <span class="data-item-date">${new Date(u.date).toLocaleDateString()} ${u.edited > 0 ? '(Edited ' + u.edited + 'x)' : ''}</span>
+                </div>
+            `).join('');
+        }
+
+        function addAcademic() {
+            const grade = document.getElementById('gradeName').value;
+            const subject = document.getElementById('subjectName').value;
+            const score = parseInt(document.getElementById('avgScore').value);
+            const status = document.getElementById('academicStatus').value;
+            if (!grade || !subject || !score) {
+                showNotification('Please fill all fields', 'warning');
+                return;
+            }
+            db.addRecord('academics', { grade, subject, score, status });
+            document.getElementById('gradeName').value = '';
+            document.getElementById('subjectName').value = '';
+            document.getElementById('avgScore').value = '';
+            showNotification('Academic result added!', 'success');
+            loadAdminAcademics();
+        }
+
+        function deleteAcademic(id) {
+            if (confirm('Delete this record?')) {
+                db.deleteRecord('academics', id);
+                showNotification('Record deleted', 'success');
+                loadAdminAcademics();
+            }
+        }
+
+        function loadAdminAcademics() {
+            const academics = db.getRecords('academics');
+            document.getElementById('academicsList2').innerHTML = academics.map(a => `
+                <div class="data-item">
+                    <div class="data-item-header">
+                        <span>${a.grade} - ${a.subject}: ${a.score}%</span>
+                        <button class="btn btn-danger btn-small" onclick="deleteAcademic(${a.id})">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addFee() {
+            const grade = document.getElementById('feeGrade').value;
+            const tuition = parseInt(document.getElementById('tuitionFee').value);
+            const total = parseInt(document.getElementById('totalFee').value);
+            if (!grade || !tuition || !total) {
+                showNotification('Please fill all fields', 'warning');
+                return;
+            }
+            db.addRecord('fees', { grade, tuition, total });
+            document.getElementById('feeGrade').value = '';
+            document.getElementById('tuitionFee').value = '';
+            document.getElementById('totalFee').value = '';
+            showNotification('Fee structure added!', 'success');
+            loadAdminFees();
+        }
+
+        function deleteFee(id) {
+            if (confirm('Delete this fee structure?')) {
+                db.deleteRecord('fees', id);
+                showNotification('Fee deleted', 'success');
+                loadAdminFees();
+            }
+        }
+
+        function loadAdminFees() {
+            const fees = db.getRecords('fees');
+            document.getElementById('feesList2').innerHTML = fees.map(f => `
+                <div class="data-item">
+                    <div class="data-item-header">
+                        <span>${f.grade} - KES ${f.total.toLocaleString()}</span>
+                        <button class="btn btn-danger btn-small" onclick="deleteFee(${f.id})">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addStaff() {
+            const name = document.getElementById('staffName').value;
+            const position = document.getElementById('staffPosition').value;
+            const subjects = document.getElementById('staffSubjects').value;
+            if (!name || !position || !subjects) {
+                showNotification('Please fill all fields', 'warning');
+                return;
+            }
+            db.addRecord('staff', { name, position, subjects });
+            document.getElementById('staffName').value = '';
+            document.getElementById('staffPosition').value = '';
+            document.getElementById('staffSubjects').value = '';
+            showNotification('Staff member added!', 'success');
+            loadAdminStaff();
+        }
+
+        function deleteStaff(id) {
+            if (confirm('Delete this staff member?')) {
+                db.deleteRecord('staff', id);
+                showNotification('Staff deleted', 'success');
+                loadAdminStaff();
+            }
+        }
+
+        function loadAdminStaff() {
+            const staff = db.getRecords('staff');
+            document.getElementById('staffList2').innerHTML = staff.map(s => `
+                <div class="data-item">
+                    <div class="data-item-header">
+                        <span>${s.name} - ${s.position}</span>
+                        <button class="btn btn-danger btn-small" onclick="deleteStaff(${s.id})">Delete</button>
+                    </div>
+                    <div class="data-item-content">${s.subjects}</div>
+                </div>
+            `).join('');
+        }
+
+        function exportData() {
+            const dataStr = db.exportData();
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'santapris-data-' + new Date().toISOString().split('T')[0] + '.json';
+            link.click();
+            showNotification('Data exported successfully!', 'success');
+        }
+
+        function importData() {
+            const file = document.getElementById('importFile').files[0];
+            if (!file) {
+                showNotification('Please select a file', 'warning');
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                if (db.importData(e.target.result)) {
+                    showNotification('Data imported successfully!', 'success');
+                    loadAdminUpdates();
+                } else {
+                    showNotification('Invalid file format', 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function clearAllData() {
+            if (confirm('⚠️ This will delete ALL data! Are you sure?') && confirm('Click OK again to confirm deletion')) {
+                db.clearAll();
+                showNotification('All data cleared', 'success');
+                window.location.reload();
+            }
+        }
+
+        function showNotification(message, type) {
+            const notif = document.createElement('div');
+            notif.className = `notification notification-${type}`;
+            notif.textContent = message;
+            document.body.appendChild(notif);
+            setTimeout(() => notif.remove(), 3000);
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        }
+
+        function toggleMobileMenu() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.body.classList.add('dark-mode');
+            }
+            loadHome();
+        });
+    </script>
+</body>
+</html>
